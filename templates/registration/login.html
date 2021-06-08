@@ -1,0 +1,10 @@
+
+<form action="{% url 'login' %}" method="post">
+    {{ form.as_p}}
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}" />
+    <br>                             
+    <input type="submit" value="Log-in" class="btn btn-success">
+</form>
+
+<a href="{%url 'registration'%}" type="Button"><button type="button">Register</button></a>

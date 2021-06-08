@@ -1,0 +1,7 @@
+
+                            <h4>Enter your details to create an account:</h4>
+                            <form method="post">
+                                {{ form.as_p }}
+                                {% csrf_token %}
+                                    <input type="submit" value="Create my account" class="btn btn-success">
+                            </form>
