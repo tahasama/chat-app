@@ -47,9 +47,6 @@ class CreateRoomView(CreateView):
 class UsersListView(LoginRequiredMixin, ListView):
     model = User
     template_name = 'users_list.html'
-    def get_queryset(self):
-        qs = super().get_queryset()
-        return qs.exclude(username=self.request.user)
 
 
 # class JoinerRoomListView(LoginRequiredMixin, ListView):

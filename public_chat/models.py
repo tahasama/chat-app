@@ -13,9 +13,9 @@ class PublicChatRoom(models.Model):
     def __str__(self):
         return self.title
 
-class PublicChatRoomMessageManager(models.Manager):
-    def by_room(self, room):
-        return PublicChatRoomMessage.objects.filter(room=room).order_by("-time_stamp")
+# class PublicChatRoomMessageManager(models.Manager):
+#     def by_room(self, room):
+#         return PublicChatRoomMessage.objects.filter(room=room).order_by("-time_stamp")
 
 # replaces message
 class PublicChatRoomMessage(models.Model):
@@ -25,7 +25,7 @@ class PublicChatRoomMessage(models.Model):
     time_stamp = models.DateTimeField(default=timezone.now)
     content = models.TextField(unique=False, blank=True)
 
-    room_objects = PublicChatRoomMessageManager()
+    # room_objects = PublicChatRoomMessageManager()
     objects = models.Manager()
 
     def __str__(self):
