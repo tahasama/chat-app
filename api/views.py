@@ -4,8 +4,13 @@ from rest_framework import viewsets, status
 from . import permissions
 from .serializers import UserSerializer, PublicChatRoomSerializer, PublicChatRoomMessageSerializer
 from public_chat.models import PublicChatRoom, PublicChatRoomMessage
+from rest_framework.pagination import PageNumberPagination
 
-  
+class PublicChatRoomMessagePagination(PageNumberPagination):
+    page_size = 20
+    page_size_query_param = 'page_size'
+    max_page_size = 40
+
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = [UserSerializer]
 
@@ -25,12 +30,16 @@ class PublicChatRoomViewSet(viewsets.ModelViewSet):
     queryset = PublicChatRoom.objects.all()
     serializer_class = PublicChatRoomSerializer
     permission_classes = [permissions.IsRoomer]
+    
 
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+
 class PublicChatRoomMessageViewSet(viewsets.ModelViewSet):
     queryset = PublicChatRoomMessage.objects.all()
     serializer_class = PublicChatRoomMessageSerializer
-    #permission_classes = [permissions.IsRoomer]
+    pagination_class =  PublicChatRoomMessagePagination
+    permission_classes = [permissions.IsRoomer]
+    

@@ -59,8 +59,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def save_message(self,message):
-        course = get_object_or_404(PublicChatRoom,id=self.id)
-        messages = PublicChatRoomMessage.objects.create(user=self.scope['user'], content=message,room=course)
+        room = get_object_or_404(PublicChatRoom,id=self.id)
+        messages = PublicChatRoomMessage.objects.create(user=self.scope['user'], content=message,room=room)
         return messages
 
         

@@ -71,7 +71,7 @@ class JoinerRoomDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         # get course object
         room = self.get_object()
-        context['messages'] = PublicChatRoomMessage.objects.filter(room=room).order_by('-time_stamp')[:40:-1]
+        context['messages'] = PublicChatRoomMessage.objects.filter(room=room).order_by('-time_stamp')[:5:-1]
         
         return context
 

@@ -1,4 +1,15 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="notif">Document</title>
+
+</head>
+<body>
+    
                   
     <textarea id="chat-log" cols="100" rows="20">
      
@@ -39,7 +50,7 @@ me at {{m.time_stamp.time}}
             + roomId
             + '/'
         );
-
+        var x = 1;
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
             var dateOptions = {hour: 'numeric', minute: 'numeric', hour12: true};
@@ -48,7 +59,10 @@ me at {{m.time_stamp.time}}
             var name = isMe ? 'Me' : data.user;
 
             document.querySelector('#chat-log').value += (name+' at '+ datetime+'\n'+data.message +'\n');
+            document.getElementById("notif").innerHTML = '(+'+ x++ +' messa...)';
         };
+
+
 
         chatSocket.onclose = function(e) {
             console.error('Chat socket closed unexpectedly');
@@ -70,3 +84,6 @@ me at {{m.time_stamp.time}}
             messageInputDom.value = '';
         };
     </script>
+
+</body>
+</html>
