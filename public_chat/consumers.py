@@ -61,10 +61,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
     def save_message(self,message):
         course = get_object_or_404(PublicChatRoom,id=self.id)
         messages = PublicChatRoomMessage.objects.create(user=self.scope['user'], content=message,room=course)
-        print(messages.content)
-        print(messages.user)
-        print(messages.room)
-        print(messages.time_stamp)
         return messages
 
         
