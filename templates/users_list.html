@@ -6,14 +6,19 @@
 
 {% for room in user.chatrooms_created.all %}
 {% if request.user == room.owner or request.user in room.joiners.all %}  
+<hr>
    <p>with participants: </p> 
     {% for x in room.joiners.all %}
     <h3>{{x.username}}</h3>
     {%endfor%}
+
     <a href="{% url 'JoinerRoomDetail' room.id%}" >
         <button type="button" > {{room.title}} </button>
     </a>
     <br>
+
+{%endif%}
+{% if request.user == room.owner %}  
     <a href="{% url 'RoomJoinersUpdateView' room.id%}" >
         <button type="button" > update/add members </button>
     </a>

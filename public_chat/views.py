@@ -49,6 +49,7 @@ class UsersListView(LoginRequiredMixin, ListView):
     template_name = 'users_list.html'
 
 
+
 # class JoinerRoomListView(LoginRequiredMixin, ListView):
 #     model = PublicChatRoom
 #     template_name = 'list.html'
@@ -62,17 +63,19 @@ class UsersListView(LoginRequiredMixin, ListView):
 class JoinerRoomDetailView(DetailView):
     model = PublicChatRoom
     template_name = 'detail.html'
+
     def get_queryset(self):
-        qs = super().get_queryset()
-        qs.filter(joiners__in=[self.request.user])
+        qs = PublicChatRoom.objects.filter(
+                            Q(joiners__in=[self.request.user]) | Q(owner=self.request.user)).distinct()         
         return qs
+         
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # get course object
         room = self.get_object()
-        context['messages'] = PublicChatRoomMessage.objects.filter(room=room).order_by('-time_stamp')[:5:-1]
-        
+        print(room)
+        context['messages'] = PublicChatRoomMessage.objects.filter(
+                                                            room=room).order_by('-time_stamp')[:5:-1]        
         return context
 
 # def JoinerRoomDetailView(request, room_id):
@@ -98,6 +101,13 @@ class RoomJoinersUpdateView(UpdateView):
     template_name = 'update.html'
     fields = ["joiners"]
     success_url =reverse_lazy("UsersListView")
+    context_object_name = 'room'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs.filter(owner=self.request.user)
+        return qs
+            
 
 class RegistrationView(CreateView):
     template_name = 'registration.html'

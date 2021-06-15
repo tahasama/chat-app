@@ -6,21 +6,24 @@ from .serializers import UserSerializer, PublicChatRoomSerializer, PublicChatRoo
 from public_chat.models import PublicChatRoom, PublicChatRoomMessage
 from rest_framework.pagination import PageNumberPagination
 
+from rest_framework.permissions import AllowAny, IsAuthenticated
+
+
 class PublicChatRoomMessagePagination(PageNumberPagination):
     page_size = 20
     page_size_query_param = 'page_size'
     max_page_size = 40
 
 class UserViewSet(viewsets.ModelViewSet):
-    serializer_class = [UserSerializer]
+    serializer_class = UserSerializer
 
     def get_permissions(self):
         if self.action in ['create']:
-            self.permission_classes = [permissions.AllowAny]
+            self.permission_classes = [AllowAny]
         elif self.action in ['update','partial_update','destroy']:
             self.permission_classes = [permissions.IsUser,]
         else:
-            self.permission_classes = [permissions.IsAuthenticated]
+            self.permission_classes = [IsAuthenticated]
         return super().get_permissions()
    
     def get_queryset(self):

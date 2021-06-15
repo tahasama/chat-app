@@ -8,7 +8,7 @@ from .models import PublicChatRoom, PublicChatRoomMessage
 
 
 class PublicChatRoomAdmin(admin.ModelAdmin):
-    list_display = ['id','title']
+    list_display = ['id','title','owner']
     search_fields = ['id','title']
     list_filter = ['id']
 
