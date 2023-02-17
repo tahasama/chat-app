@@ -10,3 +10,6 @@ only users that have been added by room owner are allowed.
 room owners, has all CRUD actions on rooms
 
 pure django with templates and javascript + full working API.
+
+
+FrameWork : Django + Django RestFramework.
